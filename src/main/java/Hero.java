@@ -19,4 +19,29 @@ public class Hero {
   public String getName() {
     return mName;
   }
+
+  public String getAbility() {
+    return mAbility;
+  }
+
+  public String getUniverse(){
+    return mUniverse;
+  }
+
+  public static List<Hero> all(){
+    return instances;
+  }
+
+  public static void clear(){
+    instances.clear();
+  }
+
+
+  public int getId() {
+    return mId;
+  }
+
+  public static Hero find(int id){
+    return instances.get(id - 1);
+  }
 }

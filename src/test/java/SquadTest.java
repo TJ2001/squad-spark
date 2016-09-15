@@ -15,9 +15,9 @@ public class SquadTest {
   }
 
   @Test
-  public void getOrganization_organizationInstantiatesWithOrganization_Avengers() {
+  public void getTeam_teamInstantiatesWithTeam_Avengers() {
     Squad testSquad = new Squad("Avengers");
-    assertEquals("Avengers", testSquad.getOrganization());
+    assertEquals("Avengers", testSquad.getTeam());
   }
 
   @Test
@@ -41,15 +41,8 @@ public class SquadTest {
     assertEquals(1, testSquad.getId());
   }
 
-  // @Test
-  // public void find_returnsSquadFromId_Avengers() {
-  //   Squad.clear();
-  //   Squad testSquad = new Squad("Avengers");
-  //   assertEquals("Avengers", Squad.find(testSquad.getId()));
-  // }
-
   @Test
-  public void find_returnsSquadWithSameId_Avengers() {
+  public void find_returnsSquadWithSameId_testSquadTwo() {
     Squad testSquadOne = new Squad("Avengers");
     Squad testSquadTwo = new Squad("X-men");
     assertEquals(Squad.find(testSquadTwo.getId()), testSquadTwo);
@@ -61,12 +54,12 @@ public class SquadTest {
     assertEquals(0, testSquad.getHeroes().size());
   }
 
-  // @Test
-  // public void addHeroes_addHeroToList_true(){
-  //   Squad.clear();
-  //   Hero testHero = new Hero("Captain America");
-  //   Squad testSquad = new Squad("Avengers");
-  //   testSquad.addHero(testHero);
-  //   assertTrue(testSquad.getTasks().contains(testHero));
-  // }
+  @Test
+  public void addHeroes_addHeroToList_true(){
+    Squad.clear();
+    Hero testHero = new Hero("Superman", "Strength, Flight, Laser Eyes", "DC");
+    Squad testSquad = new Squad("Avengers");
+    testSquad.addHero(testHero);
+    assertTrue(testSquad.getHeroes().contains(testHero));
+  }
 }

@@ -2,20 +2,20 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Squad {
-  private String mOrganization;
+  private String mTeam;
   private static ArrayList<Squad> instances = new ArrayList<Squad>();
   private int mId;
   private List<Hero> mHeroes;
 
   public Squad(String organization) {
-    mOrganization = organization;
+    mTeam = organization;
     instances.add(this);
     mId = instances.size();
     mHeroes = new ArrayList<Hero>();
   }
 
-  public String getOrganization() {
-    return mOrganization;
+  public String getTeam() {
+    return mTeam;
   }
 
   public static ArrayList<Squad> all() {
