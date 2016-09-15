@@ -1,0 +1,15 @@
+<div class="header">
+  <h1>$squad.getTeam() Teams:</h1>
+</div>
+
+<ul>
+  #foreach($hero in $squad.getHeroes())
+   <li>
+    <h3>$hero.getName()</h3>
+    <h3>$hero.getAbility()</h3>
+   </li>
+  #end
+</ul>
+
+<p><a href="/squads/$squad.getId()/heroes/new">Add a Hero</a></p>
+<p><a href="/squads">All Teams</a></p>

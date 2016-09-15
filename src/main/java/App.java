@@ -31,9 +31,11 @@ public class App {
     post("/squads", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       String team = request.queryParams("team");
-      System.out.println(team);
       Squad newSquad = new Squad(team);
-      model.put("template", "templates/squads.vtl");
+      System.out.println(newSquad);
+      // model.put("squad", newSquad);
+      // model.put("template", "templates/squads.vtl");
+      response.redirect("/squads/" + newSquad.getId());
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -43,6 +45,30 @@ public class App {
       )));
       model.put("squad", squad);
       model.put("template", "templates/squad.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/squads/:id/heroes/new", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Squad squad = Squad.find(Integer.parseInt(request.params(":id")));
+      model.put("squad", squad);
+      model.put("template", "templates/hero-form.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/heroes", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Integer squadId = Integer.parseInt(request.queryParams("squadId"));
+      Squad squad = Squad.find(squadId);
+
+      String name = request.queryParams("name");
+      String ability = request.queryParams("ability");
+      String universe = request.queryParams("universe");
+      Hero newHero = new Hero(name, ability, universe);
+      squad.addHero(newHero);
+
+      model.put("squad", squad);
+      response.redirect("/squads/" + squadId);
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
   }

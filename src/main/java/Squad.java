@@ -7,8 +7,8 @@ public class Squad {
   private int mId;
   private List<Hero> mHeroes;
 
-  public Squad(String organization) {
-    mTeam = organization;
+  public Squad(String team) {
+    mTeam = team;
     instances.add(this);
     mId = instances.size();
     mHeroes = new ArrayList<Hero>();

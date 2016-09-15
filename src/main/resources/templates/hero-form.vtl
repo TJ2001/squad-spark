@@ -1,0 +1,16 @@
+<div class="header">
+  <h1>Add a Hero to $squad.getTeam()</h1>
+</div>
+
+  <div class="input-form">
+    <form action="/heroes" method="post">
+      <input id="squadId" name="squadId" type="hidden" value="$squad.getId()">
+      <label for="name">Hero name</label>
+      <input id="name" name="name" type="text" class="form-control">
+      <label for="ability">Hero's Ability</label>
+      <input id="ability" name="ability" type="text" class="form-control">
+      <label for="universe">Fictional Universe</label>
+      <input id="universe" name="universe" type="text" class="form-control">
+      <button type="submit" class="btn btn-success">Add Hero</button>
+    </form>
+  </div>
