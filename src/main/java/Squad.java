@@ -1,44 +1,85 @@
 import java.util.List;
 import java.util.ArrayList;
+import org.sql2o.*;
+
 
 public class Squad {
-  private String mTeam;
-  private static ArrayList<Squad> instances = new ArrayList<Squad>();
-  private int mId;
-  private List<Hero> mHeroes;
+  private String team;
+  private int id;
 
   public Squad(String team) {
-    mTeam = team;
-    instances.add(this);
-    mId = instances.size();
-    mHeroes = new ArrayList<Hero>();
+    this.team = team;
   }
+
 
   public String getTeam() {
-    return mTeam;
+    return team;
   }
 
-  public static ArrayList<Squad> all() {
-    return instances;
+  public static List<Squad> all() {
+    String sql = "SELECT id, team FROM squads";
+    try(Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql).executeAndFetch(Squad.class);
+    }
   }
 
-  public static void clear() {
-    instances.clear();
-  }
+  // public static void clear() {
+  //   instances.clear();
+  // }
 
   public int getId() {
-    return mId;
+    return id;
   }
 
   public static Squad find(int id) {
-    return instances.get(id - 1);
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM squads where id=:id";
+      Squad squad = con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetchFirst(Squad.class);
+        return squad;
+    }
   }
 
   public List<Hero> getHeroes() {
-    return mHeroes;
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM tasks where squadId=:id";
+      return con.createQuery(sql)
+        .addParameter("id", this.id)
+        .executeAndFetch(Hero.class);
+    }
   }
 
-  public void addHero(Hero hero) {
-    mHeroes.add(hero);
+  @Override
+  public boolean equals(Object otherSquad) {
+    if (!(otherSquad instanceof Squad)) {
+      return false;
+    } else {
+      Squad newSquad = (Squad) otherSquad;
+      return this.getTeam().equals(newSquad.getTeam()) &&
+      this.getId() == newSquad.getId();
+    }
   }
+  // public static Squad find(int id) {
+  //   // return instances.get(id - 1);
+  // }
+  //
+
+
+  public void save() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO squads (team) VALUES (:team)";
+      this.id = (int) con.createQuery(sql, true)
+        .addParameter("team", this.team)
+        .executeUpdate()
+        .getKey();
+    }
+  }
+
+
+  // public void addHero(Hero hero) {
+    // mHeroes.add(hero);
+  // }
+
+
 }
